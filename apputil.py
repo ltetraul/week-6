@@ -35,3 +35,32 @@ class Genius:
         artist_data = artist_response.json()
 
         return artist_data
+        
+        def get_artists(self, search_terms: list) -> pd.DataFrame:
+        """
+        Retrieve artist information for a list of search terms and return as a DataFrame.
+        """
+        data = []
+
+        for term in search_terms:
+            try:
+                artist_data = self.get_artist(term)
+                artist_info = artist_data.get("response", {}).get("artist", {})
+
+                data.append({
+                    "search_term": term,
+                    "artist_name": artist_info.get("name"),
+                    "artist_id": artist_info.get("id"),
+                    "followers_count": artist_info.get("followers_count", None)
+                })
+            except Exception:
+                data.append({
+                    "search_term": term,
+                    "artist_name": None,
+                    "artist_id": None,
+                    "followers_count": None
+                })
+
+        return pd.DataFrame(data)
+
+
