@@ -63,4 +63,24 @@ class Genius:
 
         return pd.DataFrame(data)
 
+#testing
+if __name__ == "__main__":
+    ACCESS_TOKEN = "OZrjBMSu-gfg3gZ7UsUdWYQPR9wrB1FqvQCREroPlikmeTmmXjQlNcKi2nkDYuY1"
+    genius = Genius(access_token=ACCESS_TOKEN)
 
+    #test single artist
+    try:
+        artist_info = genius.get_artist("Radiohead")
+        print("Single artist info:")
+        print(artist_info)
+    except Exception as e:
+        print("Error fetching single artist:", e)
+
+    #test multiple artists
+    search_terms = ['Rihanna', 'Tycho', 'Seal', 'U2']
+    try:
+        df = genius.get_artists(search_terms)
+        print("\nMultiple artists DataFrame:")
+        print(df)
+    except Exception as e:
+        print("Error fetching multiple artists:", e)
